@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Link} from "react-router";
 export const Header =(props) =>
  {
         return(
@@ -8,8 +8,8 @@ export const Header =(props) =>
                     <div className="navbar-header">
                         <ul className="nav navbar-nav">
                             <li>
-                                <a href="/">Home</a>
-                                <a href="user">User</a>
+                                <Link to = {"/home"} activeStyle={{color:"red"}}>Home</Link>
+                                <Link to = {"/user/10"} activeClassName = {"active"}>User</Link>
                             </li>
                         </ul>
                     </div>
