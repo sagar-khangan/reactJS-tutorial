@@ -1,32 +1,63 @@
 import React from "react";
 
 export class Home extends React.Component{
+
+    constructor(props){
+        super();
+        this.state= {
+            age:props.initialAge,
+            status:0,
+            homeLink:props.initialLink
+        };
+        setTimeout(()=>{
+            this.setState({
+                status:1
+            })
+        },3000)
+    }
+    onMakeOlder(){
+        this.setState({
+            age: this.state.age+3
+        })
+    }
+    onMakeYoung(){
+        this.setState({
+            age: this.state.age-3
+        })
+    }
+
+    onChangeLink(){
+        this.props.changeLink(this.state.homeLink);
+    }
+    onHandleChange(event){
+        this.setState({
+            homeLink:event.target.value
+        })
+    }
     render(){
-        console.log(this.props);
-        let content="";
-        if(true){
-            content = <p>Hello</p>
-        }
         return(
-                <div>
-                    <p>In a new component</p>
-                    <p>Your Name is {this.props.name} age is {this.props.age}</p>
-                    <p>User => Name is {this.props.user.name} Hobbies are </p>
-                    <ul>
-                        {this.props.user.hobby.map((hobby,i)=><li key={i}>{hobby}</li>)}
-                    </ul>
-                    {content}
-                    {"code"}<br/>
-                    {5==2 ?"yes":"No"}
-                    {this.props.children}
-                </div>
+            <div>
+                <p>In a new component</p>
+                <p>Your Name is {this.props.name}and age is {this.state.age}</p>
+                status {this.state.status}
+                <hr/>
+                <button onClick={this.onMakeOlder.bind(this)} className="btn  btn-primary">Make Me older</button>
+                <hr/>
+                <button onClick={() => this.onMakeYoung()} className="btn  btn-primary">Make Me Younger</button>
+                <hr/>
+                <button  onClick={this.props.greet} className="btn  btn-primary">Greet</button>
+                <hr/>
+                <input type="text" value={this.state.homeLink} onChange={(event)=> this.onHandleChange(event)}/>
+                <button  onClick={this.onChangeLink.bind(this)} className="btn  btn-primary">Change Head</button>
+            </div>
         );
     }
 }
 
 Home.PropTypes = {
     name:React.PropTypes.string,
-    age:React.PropTypes.number,
-    user:React.PropTypes.object,
-    children:React.PropTypes.element.isRequired
+    initalAge:React.PropTypes.number,
+    greet:React.PropTypes.func,
+    initialLink:React.PropTypes.string
+
 }
